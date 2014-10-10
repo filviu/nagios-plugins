@@ -42,7 +42,7 @@ SERIES_URL=$(curl -s ${HOST}:${PORT}/ajax/categories | grep -B2 Series | grep ur
 AUTHORS=$(curl -s ${HOST}:${PORT}${AUTHORS_URL}?num=0 | grep total_num| egrep -o '[0-9]+') || STATUS=1
 SERIES=$(curl -s ${HOST}:${PORT}${SERIES_URL}?num=0 | grep total_num| egrep -o '[0-9]+') || STATUS=1
 if [ $((STATUS)) -eq 0 ]; then
-    echo "calibre-server OK - ${BKS} books by ${AUTHORS} authors in ${SERIES} series | books=${BKS}books;;;;${AUTHORS}authors;;;;${SERIES}series;;;;"
+    echo "calibre-server OK - ${BKS} books by ${AUTHORS} authors in ${SERIES} series | books=${BKS}books;; authors=${AUTHORS}authors;; series=${SERIES}series;;"
 elif [ $((STATUS)) -eq 1 ]; then
     echo "calibre-server unreachable"
 fi
