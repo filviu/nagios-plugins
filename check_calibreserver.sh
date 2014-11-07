@@ -37,8 +37,8 @@ done
 STATUS=0
 
 BKS=$(curl -s ${HOST}:${PORT}/ajax/search?num=0 | grep total_num| egrep -o '[0-9]+') || STATUS=1
-AUTHORS_URL=$(curl -s ${HOST}:${PORT}/ajax/categories | grep -B2 Authors | grep url | awk -F\" '{print $4}') || STATUS=1
-SERIES_URL=$(curl -s ${HOST}:${PORT}/ajax/categories | grep -B2 "\"Series\"" | grep url | awk -F\" '{print $4}') || STATUS=1
+AUTHORS_URL=$(curl -s ${HOST}:${PORT}/ajax/categories | grep -A2 Authors | grep url | awk -F\" '{print $4}') || STATUS=1
+SERIES_URL=$(curl -s ${HOST}:${PORT}/ajax/categories | grep -A2 "\"Series\"" | grep url | awk -F\" '{print $4}') || STATUS=1
 AUTHORS=$(curl -s ${HOST}:${PORT}${AUTHORS_URL}?num=0 | grep total_num| egrep -o '[0-9]+') || STATUS=1
 SERIES=$(curl -s ${HOST}:${PORT}${SERIES_URL}?num=0 | grep total_num| egrep -o '[0-9]+') || STATUS=1
 if [ $((STATUS)) -eq 0 ]; then
