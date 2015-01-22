@@ -40,17 +40,20 @@ if [ ! -d "$CHKPATH" ]; then
 fi
 
 MESSAGE=""
+COUNTALL=0
+COUNTERR=0
 while read FILE; do
-    echo $FILE
     if [ -s "${CHKPATH}/${FILE}" ]; then
 	MESSAGE="${MESSAGE}${FILE}; "
+	COUNTERR=$((COUNTERR+1))
     fi
+    COUNTALL=$((COUNTALL+1))
 done < <(ls -1 "$CHKPATH")
 
 if [ -z "$MESSAGE" ]; then
-    echo "OK: Path $CHKPATH has all files empty"
+    echo "OK: $COUNTALL empty file$([ $COUNTALL -gt 1 ]&& echo -e s) at $CHKPATH"
     exit $STATE_OK
 else
-    echo "WARNING: Non empty files at $CHKPATH $MESSAGE"
+    echo "WARNING: $COUNTERR non empty file$([ $COUNTERR -gt 1 ]&& echo -e s) at $CHKPATH $MESSAGE"
     exit $STATE_WARNING
 fi
