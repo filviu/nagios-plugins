@@ -38,9 +38,9 @@ STATUS=0
 
 DATA=`curl -s ${HOST}:${PORT}` || STATUS=1
 
-AUDIO=$(echo $DATA | egrep -o 'Audio files: [0-9]+' | egrep -o '[0-9]+')
-VIDEO=$(echo $DATA | egrep -o 'Video files: [0-9]+' | egrep -o '[0-9]+')
-IMAGE=$(echo $DATA | egrep -o 'Image files: [0-9]+' | egrep -o '[0-9]+')
+AUDIO=$(echo $DATA | egrep -o 'Audio files</td><td>[0-9]+' | egrep -o '[0-9]+')
+VIDEO=$(echo $DATA | egrep -o 'Video files</td><td>[0-9]+' | egrep -o '[0-9]+')
+IMAGE=$(echo $DATA | egrep -o 'Image files</td><td>[0-9]+' | egrep -o '[0-9]+')
 
 if [ $((STATUS)) -eq 0 ]; then
     echo "MiniDLNA OK | audio=${AUDIO}files;;;; video=${VIDEO}files;;;; image=${IMAGE}files;;;;"
