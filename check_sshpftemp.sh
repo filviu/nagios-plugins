@@ -12,7 +12,7 @@ function usage {
     echo "-C, --crit"
     echo "   Critical temperature level"
     echo
-    echo "Example: check_sshwl -H router.example.com -W 50 -C 55"
+    echo "Example: check_sshpftemp -H pfsense.example.com -W 50 -C 55"
     echo
     echo "Note: since most routers can't have a nagios user you should set the user in .ssh/config"
     echo
@@ -73,17 +73,18 @@ if [ $CRIT -lt $WARN ]; then
 	exit ${STATE_UNKNOWN}
 fi
 
-RES=$(ssh $HOST "wl -i eth1 phy_tempsense")
+RES=$(ssh $HOST "sysctl dev.amdtemp.0.core0.sensor0")
 if [ $? -ne 0 ]; then
 	echo "SSH connection failed"
 	exit ${STATE_UNKNOWN}
 fi
-CTMP=$((($(echo $RES |awk '{ print $1 }')/2)+20))
+CTMP=$(echo $RES |awk '{ print $2 }'|tr -d C)
+CTMPINT=$(echo $CTMP | awk -F. '{print $1}')
 
-if [ $CTMP -lt $WARN ]; then
+if [ $CTMPINT -lt $WARN ]; then
 	echo "Temperature OK: ${CTMP}$(awk 'BEGIN { print "\xc2\xb0"; }')C | temp=$CTMP;$WARN;$CRIT;;"
 	exit ${STATE_OK}
-elif [ $CTMP -gt $WARN ]&&[ $CTMP -lt $CRIT ]; then
+elif [ $CTMPINT -ge $WARN ]&&[ $CTMPINT -lt $CRIT ]; then
 	echo "Temperature WARNING: ${CTMP}$(awk 'BEGIN { print "\xc2\xb0"; }')C | temp=$CTMP;$WARN;$CRIT;;"
 	exit ${STATE_WARNING}
 else
