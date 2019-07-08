@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . /usr/local/nagios/libexec/utils.sh
 
 function usage {
