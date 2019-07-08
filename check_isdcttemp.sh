@@ -2,7 +2,7 @@
 . /usr/local/nagios/libexec/utils.sh
 
 function usage {
-    echo "Usage: check_isdcttemp.sh -H host -W warn -C crit"
+    echo "Usage: check_isdcttemp.sh -D devicenumber -W warn -C crit"
     echo
     echo "Options:"
     echo "-h, --help"
