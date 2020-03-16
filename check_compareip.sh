@@ -20,7 +20,7 @@ REMOTEHOSTIP=$(ssh $REMOTEHOST curl -s icanhazip.com)
 MYIP=$(curl -s icanhazip.com)
 #REMOTEHOSTIP=$(curl -s icanhazip.com) # useful to debug
 
-if [ "$REMOTEHOSTIP" = "$MYIP" ]; then
+if [ "$REMOTEHOSTIP" == "$MYIP" ]; then
         echo "CRITICAL - my IP: $MYIP same as the $REMOTEHOST remote host: $REMOTEHOSTIP"
         exit $STATE_CRITICAL
 else
