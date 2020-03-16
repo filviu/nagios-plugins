@@ -1,3 +1,0 @@
-[submodule "nagios-plugin-check_raid"]
-	path = nagios-plugin-check_raid
-	url = git://github.com/glensc/nagios-plugin-check_raid
