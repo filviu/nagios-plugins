@@ -1,6 +1,6 @@
 #!/bin/bash
 function usage {
-    echo "Usage: check_calibre-serverstatus.sh -p twitter_username]"
+    echo "Usage: check_copsserver.sh -U cops_server_url"
     echo
     echo "Options:"
     echo "-h, --help"
@@ -29,6 +29,11 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
+
+if [[ -z "${URL}" ]]; then
+    echo "UNKNOWN - missing URL parameter, see --help"
+    exit 3
+fi
 
 STATUS=0
 
